@@ -1,9 +1,9 @@
-# Random coffee slack bot
-Takes a random user from the Slack user lists and forces them to get coffee :)
+# Random slack bot
+Takes a random user from the Slack user lists and forces them to get coffee, beer or reserve for Kandinsky :)
 
 ###
 ##Install docker
-https://docs.docker.com/install/
+- https://docs.docker.com/install/
 
 ## Slack
 1) Create a Slack app

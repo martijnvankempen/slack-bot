@@ -13,7 +13,9 @@ slack_client = SlackClient(bot_user_access_token)
 
 # constants
 RTM_READ_DELAY = 1 # 1 second delay between reading from RTM
-EXAMPLE_COMMAND = "I want coffee"
+COFFEE_EXAMPLE = "I want coffee"
+BEER_EXAMPLE = 'I want beer'
+TOSTI_DU_CHEF_EXAMPLE = 'I want a tosti du chef'
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 
 def parse_bot_commands(slack_events):
@@ -43,13 +45,13 @@ def handle_command(command, channel):
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Options: *{}*.".format(EXAMPLE_COMMAND)
+    default_response = "Not sure what you mean. Options: *{}*.".format([COFFEE_EXAMPLE, BEER_EXAMPLE, TOSTI_DU_CHEF_EXAMPLE])
 
     # Finds and executes the given command, filling in response
     response = None
 
     # This is where you start to implement more commands!
-    if command == EXAMPLE_COMMAND:
+    if command == COFFEE_EXAMPLE or command == BEER_EXAMPLE or command == TOSTI_DU_CHEF_EXAMPLE:
         userListDict = slack_client.api_call(
             "users.list",
             channel=channel
@@ -64,7 +66,17 @@ def handle_command(command, channel):
                 usernames.append(value["name"])
         
         user = random.choice(usernames)
+
         response = '@' + user
+
+    if command == COFFEE_EXAMPLE:
+    	response += ' go get the team coffee!'
+
+    if command == BEER_EXAMPLE:
+    	response += ' go get the team beer :)'
+
+    if command == TOSTI_DU_CHEF_EXAMPLE:
+    	response += ' reserve @ Kandinsky (0416 563 622)'
 
     # Sends the response back to the channel
     slack_client.api_call(
